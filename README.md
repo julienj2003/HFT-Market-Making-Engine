@@ -7,9 +7,7 @@ The engine connects to Binance Perpetuals and Coinbase Spot via WebSockets. It a
 
 ## 📂 File Architecture & Roles
 
-The project is organized into modular components to ensure separation of concerns between data ingestion, mathematical logic, and order execution.
-
-### 📍 Root Directory
+- ```Design Note```: The report of the project with explanations and plots from live runs
 
 - ```main.py```: The entry point of the application. It initializes the TradingEngine, manages the asynchronous event loop, and handles graceful shutdowns.
 
@@ -63,4 +61,41 @@ The engine's ability to "mean-revert" inventory is visualized in the included pl
 - Short Run (-2.5 BTC): Demonstrates Bid-skewing to buy back short exposure.
 
 - Long Run (+2.5 BTC): Demonstrates Ask-skewing to liquidate long exposure.
+
+## 🖥️ Sample Terminal Output
+When the engine is running, you will see a real-time telemetry stream. The example below shows a sample from a live run:
+
+```text
+[FILL] Simulated SELL of 1.5 BTC // New Position: -1.5
+INFO Starting for a 10.0 seconds test run...
+INFO Starting Trading Engine...
+STATUS: SUSPENDED // POSITION: 0.0 BTC
+Coonected to CoinbaseProvider
+Connected to BinanceFutures (Perp)
+[FILL] Simulated BUY of 0.1 BTC // New Position: -1.4
+STATUS: DEGRADED // POSITION: -1.4 BTC ---
+SPOT FV: 0.00 | PERP: 74362.68 | BASIS: 0.00 bps
+FAIR VALUE: 74362.68
+QUOTE: BID 74368.18 at 0.1 | ASK 74372.18 at 0.1
+Coonected to BinanceProvider
+[FILL] Simulated BUY of 0.1 BTC // New Position: -1.3
+STATUS: DEGRADED // POSITION: -1.3 BTC ---
+SPOT FV: 0.00 | PERP: 74362.67 | BASIS: 0.00 bps
+FAIR VALUE: 74362.67
+QUOTE: BID 74367.67 at 0.1 | ASK 74371.67 at 0.1
+[FILL] Simulated BUY of 0.1 BTC // New Position: -1.2
+STATUS: DEGRADED // POSITION: -1.2 BTC ---
+SPOT FV: 74433.36 | PERP: 74362.65 | BASIS: -9.50 bps
+FAIR VALUE: 74412.15
+QUOTE: BID 74416.65 at 0.1 | ASK 74420.65 at 0.1
+[FILL] Simulated BUY of 0.1 BTC // New Position: -1.1
+STATUS: NORMAL // POSITION: -1.1 BTC ---
+SPOT FV: 74404.91 | PERP: 74362.65 | BASIS: -5.68 bps
+FAIR VALUE: 74392.23
+QUOTE: BID 74397.23 at 0.1 | ASK 74399.23 at 0.1
+[FILL] Simulated BUY of 0.1 BTC // New Position: -1.0
+....
+ INFO Test completed successfully after 10.0s.
+INFO System offline.
+```
 
