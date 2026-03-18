@@ -27,8 +27,16 @@ The project is organized into modular components to ensure separation of concern
 
 ### One-Command Setup & Run
 
-Run the following command in your terminal to create the environment, install dependencies, and start the engine:
+Run the following command in your terminal to clone the repo, create the environment, install dependencies, and start the engine:
 
+- Clone the repository:
+
+```bash
+git clone https://github.com/julienj2003/HFT-Market-Making-Engine.git
+cd HFT-Market-Making-Engine
+```
+
+- Environment Setup & Execution
 Linux / macOS:
 ```bash
 python3 -m venv venv && source venv/bin/activate && pip install -r requirements.txt && python main.py
@@ -39,7 +47,7 @@ Windows (PowerShell):
 python -m venv venv; .\venv\Scripts\Activate.ps1; pip install -r requirements.txt; python main.py
 ```
 
-### Generating Plots
+- Generate Plots
 
 After running the engine and generating a log file, you can visualize the inventory rebalancing by running:
 
