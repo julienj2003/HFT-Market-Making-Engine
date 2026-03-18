@@ -3,7 +3,7 @@ HFT engine designed for the BTC/USDT pair, utilizing multi-venue price discovery
 
 ## 📖 Project Overview
 
-The engine connects to Binance Perpetuals and Coinbase Spot via WebSockets. It acknowledges that price discovery often happens first in the futures market (Lead) before reflecting in spot markets (Lag). By synthesizing these feeds, the engine calculates a "Consolidated Fair Value" and places Bid/Ask quotes around it. To manage risk, the engine dynamically skews its quotes based on its current inventory ($q$) to ensure it always returns to a neutral position.
+The engine connects to Binance Perpetuals and Coinbase Spot via WebSockets. It acknowledges that price discovery often happens first in the futures market (Lead) before reflecting in spot markets (Lag). By synthesizing these feeds, the engine calculates a Consolidated Fair Value and places Bid/Ask quotes around it. To manage risk, the engine dynamically skews its quotes based on its current inventory ($q$) to ensure it always returns to a neutral position.
 
 ## 📂 File Architecture & Roles
 
@@ -11,23 +11,17 @@ The project is organized into modular components to ensure separation of concern
 
 ### 📍 Root Directory
 
-main.py: The entry point of the application. It initializes the TradingEngine, manages the asynchronous event loop, and handles graceful shutdowns.
+- ```main.py```: The entry point of the application. It initializes the TradingEngine, manages the asynchronous event loop, and handles graceful shutdowns.
 
-requirements.txt: Lists all Python dependencies (WebSockets, Pandas, Matplotlib) required to run the engine.
+- ```engine.py```: The "brain" of the project. It coordinates data flow between providers and the strategy, maintains the heartbeat loop, and logs telemetry.
 
-.gitignore: Prevents environment-specific files (like venv/) and local temporary logs from being committed to the repository.
+- ```providers/```: Contains the WebSocket handlers for Binance and Coinbase. These classes manage connection persistence and normalize raw JSON data into internal OrderBook objects.
 
-### 🏗️ Source Code
+- ```models/```: Defines the core data structures, such as the OrderBook (for tracking liquidity) and the InventoryManager (for tracking positions and calculating PnL).
 
-engine.py: The "brain" of the project. It coordinates data flow between providers and the strategy, maintains the heartbeat loop, and logs telemetry.
+- ```strategy/fair_value.py```: Implements the Lead-Lag algorithm to compute the consolidated price.
 
-providers/: Contains the WebSocket handlers for Binance and Coinbase. These classes manage connection persistence and normalize raw JSON data into internal OrderBook objects.
-
-models/: Defines the core data structures, such as the OrderBook (for tracking liquidity) and the InventoryManager (for tracking positions and calculating PnL).
-
-```text strategy/fair_value.py```: Implements the Lead-Lag algorithm to compute the consolidated price.
-
-strategy/quoter.py: Calculates the actual Bid and Ask prices using the $\pm \lambda \cdot q$ skewing logic.
+- ```strategy/quoter.py```: Calculates the actual Bid and Ask prices using the $\pm \lambda \cdot q$ skewing logic.
 
 ## 🚀 Quick Start
 
@@ -58,7 +52,7 @@ python results_plot.py
 
 The engine's ability to "mean-revert" inventory is visualized in the included plots:
 
-Short Run (-2.5 BTC): Demonstrates Bid-skewing to buy back short exposure.
+- Short Run (-2.5 BTC): Demonstrates Bid-skewing to buy back short exposure.
 
-Long Run (+2.5 BTC): Demonstrates Ask-skewing to liquidate long exposure.
+- Long Run (+2.5 BTC): Demonstrates Ask-skewing to liquidate long exposure.
 
