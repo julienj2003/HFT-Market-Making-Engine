@@ -25,11 +25,9 @@ providers/: Contains the WebSocket handlers for Binance and Coinbase. These clas
 
 models/: Defines the core data structures, such as the OrderBook (for tracking liquidity) and the InventoryManager (for tracking positions and calculating PnL).
 
-strategy/:
+```text strategy/fair_value.py```: Implements the Lead-Lag algorithm to compute the consolidated price.
 
-fair_value.py: Implements the Lead-Lag algorithm to compute the consolidated price.
-
-quoter.py: Calculates the actual Bid and Ask prices using the $\pm \lambda \cdot q$ skewing logic.
+strategy/quoter.py: Calculates the actual Bid and Ask prices using the $\pm \lambda \cdot q$ skewing logic.
 
 ## 🚀 Quick Start
 
